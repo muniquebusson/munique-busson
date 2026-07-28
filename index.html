@@ -332,7 +332,7 @@
 
   <!-- STEP 1: QUEM É MUNIQUE -->
   <div class="step active" id="step-1">
-    <div class="card">
+    <div class="card" id="card-candidata">
       <div class="step-number"><span>👩‍💼</span> Conheça a candidata</div>
       <div class="step-title">Quem é Munique Busson?</div>
 
@@ -401,6 +401,10 @@
           <div style="font-size:12px;opacity:0.9;margin-top:2px;">Fique por dentro de tudo. Clique aqui! 👆</div>
         </div>
       </a>
+      <!-- BOTÃO INICIAR PESQUISA -->
+      <button onclick="iniciarPesquisa()" style="width:100%;margin-top:20px;background:linear-gradient(135deg,#FFDF00,#f5c800);color:#002776;border:none;border-radius:14px;font-family:'Inter',sans-serif;font-size:16px;font-weight:800;padding:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(255,223,0,0.4);letter-spacing:0.3px;">
+        🗳️ Iniciar Pesquisa
+      </button>
     </div>
   </div>
 
@@ -626,7 +630,7 @@
   const $btnBack = document.getElementById('btn-back');
 
   const stepLabels = {
-    1: 'Conhecer a candidata →',
+    1: 'Conhecer a candidata ↓',
     2: 'Continuar →',
     3: 'Continuar →',
     4: 'Continuar →',
@@ -732,7 +736,19 @@
       </div>`).join('');
   }
 
+  function iniciarPesquisa() {
+    currentStep = 2;
+    showStep(2);
+    updateProgress();
+  }
+
   $btnNext.addEventListener('click', () => {
+    // No step 1, rola até o card da candidata
+    if (currentStep === 1) {
+      const card = document.getElementById('card-candidata');
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     if (!validate(currentStep)) return;
     if (currentStep === 4) adaptarImpacto();
     if (currentStep === 3) adaptarImpacto();
